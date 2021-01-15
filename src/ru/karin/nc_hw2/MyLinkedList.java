@@ -45,7 +45,14 @@ public class MyLinkedList<E> implements ILinkedList<E> {
 
     @Override
     public void clear() {
-        rootNode = lastNode = null;
+        Node<E> current = rootNode;
+        Node <E> next;
+        for (int i=0; i<size; i++){
+            next = current.getNext();
+            current.setNext(null);
+            current.setElement(null);
+            current = next;
+        }
         size = 0;
     }
 
@@ -119,15 +126,20 @@ public class MyLinkedList<E> implements ILinkedList<E> {
         return size;
     }
 
-    @Override
-    public E[] toArray() {
-        E[] nodeArray = (E[]) new Object[size];
-        Node<E> current = rootNode;
+
+    @SuppressWarnings("unchecked")
+    public E[] toArray(E[] a) {
+        if (a.length < size)
+            a = (E[])java.lang.reflect.Array.newInstance(
+                    a.getClass().getComponentType(), size);
+        Node<E> currentNode = rootNode;
         for (int i=0; i<size; i++) {
-            nodeArray[i] = current.getElement();
-            current = current.getNext();
+            a[i] = currentNode.getElement();
+            currentNode = currentNode.getNext();
         }
-        return nodeArray;
+        if (a.length > size)
+            a[size] = null;
+        return a;
     }
 
     @Override

@@ -1,8 +1,5 @@
 package ru.karin.nc_hw2;
 
-import java.util.Iterator;
-import java.util.ListIterator;
-
 public class Node<E> {
 
     private E element;
